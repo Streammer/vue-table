@@ -1,5 +1,5 @@
 <template>
-    
+    <div class="vue-table"></div>
 </template>
 
 <script>
