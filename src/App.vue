@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-
+    <vTable
+        :users_data="USERS"
+    />
   </div>
 </template>
 
 <script>
   import {mapActions, mapGetters} from 'vuex'
+  import vTable from '@/components/vue-table'
   export default {
     name : 'app',
+    components: {vTable},
     methods: {
       ...mapActions(['GET_USERS_FROM_API'])
     },
