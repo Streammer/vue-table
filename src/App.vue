@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <vTable
-        :users_data="USERS"
-    />
+    <vTable :users_data="USERS"/>
   </div>
 </template>
 
