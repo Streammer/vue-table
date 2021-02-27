@@ -14,6 +14,7 @@
       />
     </div>
     <div class="vue-table__pagination">
+      <div class="prev" @click="prevClick">prev</div>
       <div class="page"
            v-for="(page, i) in pages"
            :kei="i"
@@ -22,6 +23,7 @@
       >
         {{page}}
       </div>
+      <div class="next" @click="nextClick">next</div>
     </div>
   </div>
 </template>
@@ -61,6 +63,26 @@ export default {
   methods: {
     pageClick(page) {
       this.pageNumber = page;
+    },
+    prevClick() {
+      if (this.pageNumber>0){
+        this.pageNumber--;
+        if ( this.pageNumber===0) {
+          this.pageNumber+=1;
+        }
+      }
+      else if (this.pageNumber<0) {
+        return
+      }
+    },
+    nextClick() {
+      if (this.pageNumber>0){
+        if (this.pageNumber===this.pages) {
+          return
+        }
+        this.pageNumber++;
+      }
+
     },
     sortByName() {
       this.users_data.sort((a,b)=> a.name.localeCompare(b.name))
@@ -104,7 +126,7 @@ export default {
   margin-top: 30px;
 
   .page {
-    padding: 8px;
+    padding: 5px;
     margin-right: 10px;
     border: 1px solid #e7e7e7;
     &:last-child {
@@ -119,6 +141,18 @@ export default {
   .page__selected {
     background: #aeaeae;
     color: white;
+  }
+  .prev, .next {
+    padding: 5px;
+    border: 1px solid #e7e7e7;
+    &:hover {
+      cursor: pointer;
+      background: #aeaeae;
+      color: white;
+    }
+  }
+  .prev {
+    margin-right: 10px;
   }
 }
 </style>
