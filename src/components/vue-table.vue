@@ -1,10 +1,10 @@
 <template>
   <div class="vue-table">
     <div class="vue-table__header">
-      <p @click="sortByName">Name <i class="material-icons">unfold_more</i></p>
-      <p @click="sortByPointsEarned">Points earned <i class="material-icons">unfold_more</i></p>
-      <p @click="sortByPointsEarned">Points spent <i class="material-icons">unfold_more</i></p>
-      <p @click="sortByRegistrationDate">Registration date <i class="material-icons">unfold_more</i></p>
+      <p @click="sortByName">Name <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></svg></p>
+      <p @click="sortByPointsEarned">Points earned <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></svg></p>
+      <p @click="sortByPointsEarned">Points spent <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></svg></p>
+      <p @click="sortByRegistrationDate">Registration date <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></svg></p>
     </div>
     <div class="v-table__body">
       <vTableRow
@@ -30,7 +30,6 @@
 
 <script>
 import vTableRow from './v-table-row'
-import 'vue-material-design-icons/styles.css'
 export default {
   name: "vue-table",
   components: {
@@ -52,7 +51,7 @@ export default {
   },
   computed:{
     pages() {
-      return Math.ceil(this.users_data.length / 10);
+      return Math.ceil(this.users_data.length / this.usersPerPage);
     },
     paginatedUsers() {
       let from = (this.pageNumber - 1) * this.usersPerPage;
@@ -68,7 +67,7 @@ export default {
       if (this.pageNumber>0){
         this.pageNumber--;
         if ( this.pageNumber===0) {
-          this.pageNumber+=1;
+          this.pageNumber=1;
         }
       }
       else if (this.pageNumber<0) {
