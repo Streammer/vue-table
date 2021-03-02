@@ -14,7 +14,7 @@
       />
     </div>
     <div class="vue-table__pagination">
-      <div class="prev" @click="prevClick">prev</div>
+      <div class="prev" @click="prevClick" v-show="showLeft">prev</div>
       <div class="page"
            v-for="(page, i) in pages"
            :kei="i"
@@ -23,7 +23,7 @@
       >
         {{page}}
       </div>
-      <div class="next" @click="nextClick">next</div>
+      <div class="next" @click="nextClick" v-show="showRight">next</div>
     </div>
   </div>
 </template>
@@ -46,7 +46,9 @@ export default {
   data(){
     return {
       usersPerPage: 10,
-      pageNumber: 1
+      pageNumber: 1,
+      showLeft: true,
+      showRight: true
     }
   },
   computed:{
@@ -62,26 +64,32 @@ export default {
   methods: {
     pageClick(page) {
       this.pageNumber = page;
+      this.showControls();
+      console.log(this.pageNumber)
     },
     prevClick() {
       if (this.pageNumber>0){
         this.pageNumber--;
+        this.showControls()
         if ( this.pageNumber===0) {
           this.pageNumber=1;
         }
+        this.showControls()
       }
       else if (this.pageNumber<0) {
         return
       }
+      this.showControls()
     },
     nextClick() {
+
       if (this.pageNumber>0){
         if (this.pageNumber===this.pages) {
           return
         }
         this.pageNumber++;
       }
-
+      this.showControls()
     },
     sortByName() {
       this.users_data.sort((a,b)=> a.name.localeCompare(b.name))
@@ -94,7 +102,30 @@ export default {
     },
     sortByRegistrationDate() {
       this.users_data.sort((a,b)=> a.registration_date.localeCompare(b.registration_date))
+    },
+    showControls() {
+      if(this.pageNumber === 1) {
+         this.showLeft = false
+      }
+      if(this.pageNumber === Math.ceil(this.users_data.length / this.usersPerPage)) {
+         this.showRight = false
+      }
+      if (this.pageNumber < 1) {
+        this.showLeft = true
+      }
+      if (this.pageNumber < Math.ceil(this.users_data.length / this.usersPerPage)) {
+        this.showRight = true
+      }
+      if (this.pageNumber > 1) {
+        this.showLeft = true
+      }
+      else {
+        return
+      }
     }
+  },
+  mounted() {
+    this.showControls()
   }
 }
 </script>
